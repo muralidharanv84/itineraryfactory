@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,8 +10,101 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="net.muralidharan.itineraryfactory.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
-</RelativeLayout>
+    <TableRow
+        android:paddingBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:paddingRight="16dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="From City"
+            android:layout_column="0" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Hyderabad"
+            android:id="@+id/from_city"
+            android:layout_column="1" />
+    </TableRow>
+
+    <TableRow
+        android:paddingBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:paddingRight="16dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="To City"
+            android:layout_column="0" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="San Francisco"
+            android:id="@+id/to_city"
+            android:layout_column="1" />
+    </TableRow>
+
+    <TableRow
+        android:paddingBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:paddingRight="16dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Onward date"
+            android:layout_column="0" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="2016-07-01"
+            android:id="@+id/onward_date"
+            android:layout_column="1" />
+    </TableRow>
+
+    <TableRow
+        android:paddingBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:paddingRight="16dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Return Date"
+            android:layout_column="0" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="2016-08-01"
+            android:id="@+id/return_date"
+            android:layout_column="1" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:text="Find flights"
+            android:id="@+id/button_find_flights"
+            android:layout_column="0" />
+    </TableRow>
+</TableLayout>
