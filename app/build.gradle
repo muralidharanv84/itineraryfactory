@@ -12,7 +12,26 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+            def google_api_key = properties.getProperty('google_api_key')
+            resValue "string", "google_api_key", google_api_key
+
+            def amadeus_api_key = properties.getProperty('amadeus_api_key')
+            resValue "string", "amadeus_api_key", amadeus_api_key
+        }
         release {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('release.properties').newDataInputStream())
+
+            def google_api_key = properties.getProperty('google_api_key')
+            resValue "string", "google_api_key", google_api_key
+
+            def amadeus_api_key = properties.getProperty('amadeus_api_key')
+            resValue "string", "amadeus_api_key", amadeus_api_key
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -20,8 +39,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.google.android.gms:play-services:9.0.1'
+    compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
 }

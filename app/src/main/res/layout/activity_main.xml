@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Hyderabad"
+            android:text="HYD"
             android:id="@+id/from_city"
             android:layout_column="1" />
     </TableRow>
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="San Francisco"
+            android:text="SFO"
             android:id="@+id/to_city"
             android:layout_column="1" />
     </TableRow>

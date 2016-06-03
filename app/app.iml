@@ -166,6 +166,7 @@
     <orderEntry type="library" exported="" name="play-services-iid-9.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-drive-9.0.1" level="project" />
     <orderEntry type="library" exported="" name="firebase-auth-9.0.1" level="project" />
+    <orderEntry type="library" exported="" name="com.android.volley-2015.05.28" level="project" />
     <orderEntry type="library" exported="" name="play-services-wallet-9.0.1" level="project" />
     <orderEntry type="library" exported="" name="firebase-common-9.0.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-cast-9.0.1" level="project" />
