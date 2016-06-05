@@ -41,10 +41,10 @@ public class FlightsQueryRequest {
         requestObj.put("passengers", passengersObj);
         JSONArray slice = new JSONArray();
         requestObj.put("slice", slice);
-        if (depDate != null) {
+        if (depDate != null && !depDate.trim().isEmpty()) {
             slice.put(getFlightObj(fromAirport, toAirport, depDate));
         }
-        if (returnDate != null) {
+        if (returnDate != null && !returnDate.trim().isEmpty()) {
             slice.put(getFlightObj(toAirport, fromAirport, returnDate));
         }
         return ret;

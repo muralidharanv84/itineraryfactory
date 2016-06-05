@@ -20,6 +20,7 @@ public class DateViewClickListener implements View.OnClickListener {
     DateSetListener dateSetListener;
     FragmentManager fragmentManager;
     String tag;
+    Calendar minDate;
 
     public DateViewClickListener(
             TextView textView,
@@ -34,13 +35,25 @@ public class DateViewClickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Calendar date = getDate(textView.getText().toString());
+        String dateStr = textView.getText().toString();
+        Calendar date = Calendar.getInstance();
+        if (dateStr != null && !dateStr.trim().isEmpty()) {
+            date = getDate(textView.getText().toString());
+        }
         DatePickerDialog dpd = DatePickerDialog.newInstance(
                 dateSetListener,
                 date.get(Calendar.YEAR),
                 date.get(Calendar.MONTH),
                 date.get(Calendar.DAY_OF_MONTH)
         );
+        if (minDate != null)
+            dpd.setMinDate(minDate);
+
+        // Airlines do not allow ticketing more than a year in advance.
+        Calendar maxDate = Calendar.getInstance();
+        maxDate.add(Calendar.YEAR, 1);
+        dpd.setMaxDate(maxDate);
+
         dpd.show(fragmentManager, tag);
     }
     /*
@@ -59,5 +72,13 @@ public class DateViewClickListener implements View.OnClickListener {
             Log.e(LOG_TAG, "Could not parse date string: " + str, e);
         }
         return cal;
+    }
+
+    public Calendar getMinDate() {
+        return minDate;
+    }
+
+    public void setMinDate(Calendar minDate) {
+        this.minDate = minDate;
     }
 }

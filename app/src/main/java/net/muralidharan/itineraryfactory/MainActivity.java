@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -17,6 +18,8 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void initializeFindFlightsButton() {
         Button findFlightsButton = (Button)findViewById(R.id.button_find_flights);
+        final ProgressBar progressBar = (ProgressBar)findViewById(R.id.flights_loading_indicator);
+
         if (findFlightsButton != null) {
             findFlightsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,9 +81,11 @@ public class MainActivity extends AppCompatActivity {
                     String depDate = ((TextView)findViewById(R.id.onward_date)).getText().toString();
                     String returnDate = ((TextView)findViewById(R.id.return_date)).getText().toString();
                     try {
+                        progressBar.setVisibility(View.VISIBLE);
                         findFlights(fromAirport, toAirport, depDate, returnDate);
                     } catch (JSONException e) {
                         Log.e(LOG_TAG, "JSONException: ", e);
+                        progressBar.setVisibility(View.GONE);
                     }
                 }
             });
@@ -101,12 +108,16 @@ public class MainActivity extends AppCompatActivity {
                 getFragmentManager(),
                 "depDate"
         );
+        depDateClickListener.setMinDate(Calendar.getInstance());
+
         DateViewClickListener returnDateClickListener = new DateViewClickListener(
                 returnDateTextView,
                 returnDateSetListener,
                 getFragmentManager(),
                 "returnDate"
         );
+        returnDateClickListener.setMinDate(Calendar.getInstance());
+        depDateSetListener.registerClickListenerToSetMinDate(returnDateClickListener);
 
         depDateTextView.setOnClickListener(depDateClickListener);
         returnDateTextView.setOnClickListener(returnDateClickListener);
@@ -118,14 +129,18 @@ public class MainActivity extends AppCompatActivity {
         FlightsQueryRequest request = new FlightsQueryRequest(getBaseContext(), fromAirport, toAirport);
         request.setDepDate(depDate);
         request.setReturnDate(returnDate);
+        JSONObject requestJSON = request.getAPIRequestJSON(20, 2);
+        Log.v(LOG_TAG, "RequestJSON: " + requestJSON);
 
         RequestQueue queue = Volley.newRequestQueue(request.getContext());
         final String BASE_URL = "https://www.googleapis.com/qpxExpress/v1/trips/search?key=" +
                 getString(R.string.google_api_key);
 
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.flights_loading_indicator);
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 BASE_URL,
-                request.getAPIRequestJSON(20, 2),
+                requestJSON,
                 new Response.Listener<JSONObject>() {
 
             @Override
@@ -134,12 +149,15 @@ public class MainActivity extends AppCompatActivity {
                     Log.v(LOG_TAG, "Received response: " + response.toString(4));
                 } catch (JSONException e) {
                     Log.v(LOG_TAG, "Invalid JSON? ", e);
+                } finally {
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(LOG_TAG, "Received error response: " + error.getMessage() );
+                progressBar.setVisibility(View.GONE);
             }
         });
 

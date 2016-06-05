@@ -151,5 +151,15 @@
             android:text="Find flights"
             android:id="@+id/button_find_flights"
             android:layout_column="0" />
+
+        <ProgressBar
+            android:id="@+id/flights_loading_indicator"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:layout_marginLeft="@dimen/margin_default"
+            android:visibility="gone"/>
+
     </TableRow>
 </TableLayout>
