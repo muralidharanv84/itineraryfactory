@@ -19,6 +19,7 @@
             android:paddingRight="16dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="From City"
+            android:layout_gravity="center_vertical"
             android:layout_column="0" />
 
         <FrameLayout
@@ -44,13 +45,6 @@
                 android:layout_marginRight="@dimen/margin_default"
                 android:visibility="gone"/>
         </FrameLayout>
-        <!--<EditText-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-            <!--android:text="HYD"-->
-            <!--android:id="@+id/from_city"-->
-            <!--android:layout_column="1" />-->
     </TableRow>
 
     <TableRow
@@ -62,6 +56,7 @@
             android:paddingRight="16dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="To City"
+            android:layout_gravity="center_vertical"
             android:layout_column="0" />
 
         <FrameLayout
@@ -94,7 +89,24 @@
             <!--android:id="@+id/to_city"-->
             <!--android:layout_column="1" />-->
     </TableRow>
-
+    <TableRow
+        android:paddingBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:paddingRight="16dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Onward date"
+            android:layout_gravity="center_vertical"
+            android:layout_column="0" />
+        <CheckBox
+            android:id="@+id/checkbox_roundtrip"
+            android:layout_column="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:onClick="onCheckboxClicked" />
+    </TableRow>
     <TableRow
         android:paddingBottom="16dp"
         android:layout_width="match_parent"
@@ -104,6 +116,7 @@
             android:paddingRight="16dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Onward date"
+            android:layout_gravity="center_vertical"
             android:layout_column="0" />
 
         <EditText
@@ -117,6 +130,7 @@
 
     <TableRow
         android:paddingBottom="16dp"
+        android:id="@+id/return_date_tablerow"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -124,6 +138,7 @@
             android:paddingRight="16dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Return Date"
+            android:layout_gravity="center_vertical"
             android:layout_column="0" />
 
         <EditText
@@ -136,12 +151,39 @@
     </TableRow>
 
     <TableRow
+        android:paddingBottom="16dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></TableRow>
+        android:layout_height="match_parent">
+        <TextView
+            android:paddingRight="16dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Adults"
+            android:layout_gravity="center_vertical"
+            android:layout_column="0" />
+        <Spinner
+            android:id="@+id/num_adults_spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="1"/>
+
+    </TableRow>
 
     <TableRow
+        android:paddingBottom="16dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></TableRow>
+        android:layout_height="match_parent">
+        <TextView
+            android:paddingRight="16dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Children"
+            android:layout_gravity="center_vertical"
+            android:layout_column="0" />
+        <Spinner
+            android:id="@+id/num_children_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="1"/>
+    </TableRow>
 
     <TableRow
         android:layout_width="match_parent"

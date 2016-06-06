@@ -30,7 +30,7 @@ public class FlightsQueryRequest {
         this.context = context;
     }
 
-    public JSONObject getAPIRequestJSON(int numResults, int numAdults) throws JSONException {
+    public JSONObject getAPIRequestJSON(int numResults, int numAdults, int numChildren) throws JSONException {
         JSONObject ret = new JSONObject();
         JSONObject requestObj = new JSONObject();
         ret.put("request", requestObj);
@@ -38,6 +38,7 @@ public class FlightsQueryRequest {
         requestObj.put("refundable", false);
         JSONObject passengersObj = new JSONObject();
         passengersObj.put("adultCount", numAdults);
+        passengersObj.put("childCount", numChildren);
         requestObj.put("passengers", passengersObj);
         JSONArray slice = new JSONArray();
         requestObj.put("slice", slice);

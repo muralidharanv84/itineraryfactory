@@ -5,8 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -34,7 +38,28 @@ public class MainActivity extends AppCompatActivity {
         initializeAirportTextViews();
         initializeFindFlightsButton();
         initializeDatePicker();
+        initializeNumPassengerSpinners();
     }
+
+    protected void initializeNumPassengerSpinners() {
+        final int MAX_PASSENGERS = 10;
+        Spinner adultsSpinner = (Spinner) findViewById(R.id.num_adults_spinner);
+        Spinner childrenSpinner = (Spinner) findViewById(R.id.num_children_spinner);
+
+        initializeNumPassengerSpinner(adultsSpinner, MAX_PASSENGERS);
+        initializeNumPassengerSpinner(childrenSpinner, MAX_PASSENGERS);
+    }
+
+    protected void initializeNumPassengerSpinner(Spinner childrenSpinner, int max_passengers) {
+        String[] items = new String[max_passengers + 1];
+        for (int i = 0; i < max_passengers + 1; i++) {
+            items[i] = "" + i;
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, R.layout.support_simple_spinner_dropdown_item, items);
+        childrenSpinner.setAdapter(adapter);
+    }
+
 
     protected void initializeAirportTextViews()
     {
@@ -123,13 +148,44 @@ public class MainActivity extends AppCompatActivity {
         returnDateTextView.setOnClickListener(returnDateClickListener);
     }
 
-    protected void findFlights(
+    public void onCheckboxClicked(View view) {
+
+        boolean checked = ((CheckBox)view).isChecked();
+        if (view.getId() == R.id.checkbox_roundtrip) {
+            TableRow returnDateTableRow = ((TableRow) findViewById(R.id.return_date_tablerow));
+            if (checked) {
+                returnDateTableRow.setVisibility(View.VISIBLE);
+            } else {
+                TextView returnDateTextView = (TextView)findViewById(R.id.return_date);
+                returnDateTextView.setText("");
+
+                returnDateTableRow.setVisibility(View.GONE);
+
+            }
+        }
+    }
+
+        protected void findFlights(
             String fromAirport, String toAirport,String depDate, String returnDate) throws JSONException {
 
         FlightsQueryRequest request = new FlightsQueryRequest(getBaseContext(), fromAirport, toAirport);
         request.setDepDate(depDate);
         request.setReturnDate(returnDate);
-        JSONObject requestJSON = request.getAPIRequestJSON(20, 2);
+
+        Spinner adultsSpinner = (Spinner) findViewById(R.id.num_adults_spinner);
+        Spinner childrenSpinner = (Spinner) findViewById(R.id.num_children_spinner);
+
+        int num_adults = 0;
+        int num_children = 0;
+
+        try {
+            num_adults = Integer.parseInt(adultsSpinner.getSelectedItem().toString());
+            num_children = Integer.parseInt(childrenSpinner.getSelectedItem().toString());
+        } catch (NumberFormatException e) {
+            Log.e(LOG_TAG, "Could not parse passenger counts!", e);
+        }
+
+        JSONObject requestJSON = request.getAPIRequestJSON(20, num_adults, num_children);
         Log.v(LOG_TAG, "RequestJSON: " + requestJSON);
 
         RequestQueue queue = Volley.newRequestQueue(request.getContext());
