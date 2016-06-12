@@ -35,6 +35,10 @@ public class FlightsQueryRequest {
         JSONObject requestObj = new JSONObject();
         ret.put("request", requestObj);
         requestObj.put("solutions", numResults);
+
+        // Get prices in USD for now.
+        requestObj.put("saleCountry", "US");
+
         requestObj.put("refundable", false);
         JSONObject passengersObj = new JSONObject();
         passengersObj.put("adultCount", numAdults);

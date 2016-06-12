@@ -14,6 +14,7 @@ public class Airport {
 
     protected String airportCode;
     protected String label;
+    protected String city;
 
     public Airport(String airportCode, String label) {
         this.airportCode = airportCode;
@@ -37,5 +38,13 @@ public class Airport {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

@@ -200,9 +200,10 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
 
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(JSONObject responseJSON) {
                 try {
-                    Log.v(LOG_TAG, "Received response: " + response.toString(4));
+                    Log.v(LOG_TAG, "Received response: " + responseJSON.toString(4));
+                    FlightsQueryResponse response = FlightsQueryResponse.parseFrom(responseJSON);
                 } catch (JSONException e) {
                     Log.v(LOG_TAG, "Invalid JSON? ", e);
                 } finally {
