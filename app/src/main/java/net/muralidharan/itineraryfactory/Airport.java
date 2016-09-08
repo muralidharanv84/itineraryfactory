@@ -1,5 +1,7 @@
 package net.muralidharan.itineraryfactory;
 
+import java.io.Serializable;
+
 /**
  * Created by muralidharan on 6/4/16.
  *
@@ -10,7 +12,7 @@ package net.muralidharan.itineraryfactory;
  *
  */
 
-public class Airport {
+public class Airport implements Serializable {
 
     protected String airportCode;
     protected String label;

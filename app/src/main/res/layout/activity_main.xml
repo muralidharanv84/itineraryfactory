@@ -96,7 +96,7 @@
                 android:layout_column="0"
                 android:layout_gravity="center_vertical"
                 android:paddingRight="16dp"
-                android:text="Onward date"
+                android:text="Round trip"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckBox

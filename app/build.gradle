@@ -41,6 +41,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
+    testCompile 'org.json:json:20140107'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.google.android.gms:play-services:9.0.1'
     compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'

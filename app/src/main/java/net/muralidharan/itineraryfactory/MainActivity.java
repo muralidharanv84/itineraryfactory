@@ -1,5 +1,6 @@
 package net.muralidharan.itineraryfactory;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
@@ -165,8 +167,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-        protected void findFlights(
-            String fromAirport, String toAirport,String depDate, String returnDate) throws JSONException {
+    protected void findFlights(
+            String fromAirport,
+            String toAirport,
+            String depDate,
+            String returnDate) throws JSONException {
 
         FlightsQueryRequest request = new FlightsQueryRequest(getBaseContext(), fromAirport, toAirport);
         request.setDepDate(depDate);
@@ -194,6 +199,8 @@ public class MainActivity extends AppCompatActivity {
 
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.flights_loading_indicator);
 
+        final MainActivity thisActivity = this;
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 BASE_URL,
                 requestJSON,
@@ -204,8 +211,13 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Log.v(LOG_TAG, "Received response: " + responseJSON.toString(4));
                     FlightsQueryResponse response = FlightsQueryResponse.parseFrom(responseJSON);
+
+                    Intent resultsIntent = new Intent(thisActivity, FlightResultsActivity.class);
+                    resultsIntent.putExtra(Intent.EXTRA_STREAM, response);
+                    startActivity(resultsIntent);
                 } catch (JSONException e) {
                     Log.v(LOG_TAG, "Invalid JSON? ", e);
+                    findFlightsError();
                 } finally {
                     progressBar.setVisibility(View.GONE);
                 }
@@ -214,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(LOG_TAG, "Received error response: " + error.getMessage() );
+                findFlightsError();
                 progressBar.setVisibility(View.GONE);
             }
         });
@@ -223,5 +236,12 @@ public class MainActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(jsonObjectRequest);
+    }
+
+    protected void findFlightsError() {
+        Toast.makeText(
+                getBaseContext(),
+                "Error retrieving flight results! Please try again later",
+                Toast.LENGTH_LONG).show();
     }
 }
